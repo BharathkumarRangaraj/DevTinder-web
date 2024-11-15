@@ -21,7 +21,7 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      dispatch(adduser(res))
+      dispatch(adduser(res.data))
       naviage('/');
     } catch (err) {
       console.log(err.message);
