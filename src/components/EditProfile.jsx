@@ -12,9 +12,11 @@ const EditProfile = ({ user }) => {
   const [age, setage] = useState(user.age);
   const [gender, setgender] = useState(user.gender);
   const [about, setabout] = useState(user.about);
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
 
   const saveProfile = async () => {
+    setError("");
     try {
       const res = await axios.patch(
         BASE_URL + "profile/edit",
@@ -30,7 +32,7 @@ const EditProfile = ({ user }) => {
       );
       dispatch(adduser(res?.data?.data));
     } catch (err) {
-      res.send(err.message);
+      setError(err.response.data);
     }
   };
   return (
