@@ -6,8 +6,11 @@ import { adduser } from "../utils/slices/userSlice";
 import { BASE_URL } from "../utils/const";
 
 const Login = () => {
-  const [email, setemail] = useState("Gokul@gmail.com");
-  const [password, setpassword] = useState("Gokul@123");
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [isLoginForm, setIsLoginForm] = useState(true);
   const [error,seterror]=useState("")
   const naviage=useNavigate();
   const dispatch=useDispatch();
@@ -31,10 +34,52 @@ const Login = () => {
       
     }
   };
+  const handleSignUp = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "signup",
+        { firstName, lastname, email, password },
+        { withCredentials: true }
+      );
+      dispatch(adduser(res.data.data));
+      return naviage("/profile");
+    } catch (err) {
+      seterror(err?.response?.data || "Something went wrong");
+    }
+  };
   return (
     <div className="card bg-base-300 w-96 shadow-xl flex my-2 item-center ml-96">
       <div className="card-body item-center">
-        <h2 className="card-title justify-center">Login</h2>
+      <h2 className="card-title justify-center">
+            {isLoginForm ? "Login" : "Sign Up"}
+          </h2>
+          <div>
+            {!isLoginForm && (
+              <>
+                <label className="form-control w-full max-w-xs my-2">
+                  <div className="label">
+                    <span className="label-text">First Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={firstName}
+                    className="input input-bordered w-full max-w-xs"
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </label>
+                <label className="form-control w-full max-w-xs my-2">
+                  <div className="label">
+                    <span className="label-text">Last Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={lastname}
+                    className="input input-bordered w-full max-w-xs"
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </label>
+              </>
+            )}
         <div>
           <label className="form-control w-full max-w-xs">
             <div className="label">
@@ -54,7 +99,7 @@ const Login = () => {
               <span className="label-text">password:</span>
             </div>
             <input
-              type="text"
+              type="password"
               value={password}
               onChange={(e) => setpassword(e.target.value)}
               className="input input-bordered w-full max-w-xs"
@@ -63,11 +108,23 @@ const Login = () => {
         </div>
 <p className="text-red-300">{error}</p>
         <div className="card-actions justify-center">
-          <button className="btn btn-primary" onClick={handleLogin}>
-            Login
+        <button
+              className="btn btn-primary"
+              onClick={isLoginForm ? handleLogin : handleSignUp}
+            >
+              {isLoginForm ? "Login" : "Sign Up"}
           </button>
+          <p
+            className="m-auto cursor-pointer py-2"
+            onClick={() => setIsLoginForm((value) => !value)}
+          >
+            {isLoginForm
+              ? "New User? Signup Here"
+              : "Existing User? Login Here"}
+          </p>
         </div>
       </div>
+    </div>
     </div>
   );
 };

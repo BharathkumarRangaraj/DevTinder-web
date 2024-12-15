@@ -11,12 +11,15 @@ const Connections = () => {
     try {
       const res = await axios.get(BASE_URL + "user/connections", {
         withCredentials: true,
+    
       });
+      console.log(res,'resss')
       dispatch(addConnections(res.data.data));
     } catch (err) {
       // Handle Error Case
     }
   };
+  console.log(connections[1],'connectionss')
 
   useEffect(() => {
     fetchConnections();
