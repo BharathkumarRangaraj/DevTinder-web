@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar"
-import Body from "./components/body";
+import Body from "./components/Body";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import { Provider } from "react-redux";
