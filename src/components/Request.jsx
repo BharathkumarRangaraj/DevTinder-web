@@ -46,7 +46,7 @@ const Requests = () => {
       <h1 className="text-bold text-white text-3xl">Connection Requests</h1>
 
       {requests.map((request) => {
-        const { _id, firstName, lastName, photoUrl, age, gender, about } =
+        const { _id, firstName, lastname, photoUrl, age, gender, about } =
           request.fromUserId;
           console.log(request,request.fromUserId,'kldf','dfkhd')
 
@@ -64,7 +64,7 @@ const Requests = () => {
             </div>
             <div className="text-left mx-4 ">
               <h2 className="font-bold text-xl">
-                {firstName + " " + lastName}
+                {firstName + " " + lastname}
               </h2>
               {age && gender && <p>{age + ", " + gender}</p>}
               <p>{about}</p>
